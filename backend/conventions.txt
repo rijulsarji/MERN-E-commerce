@@ -1,0 +1,3 @@
+controllers - for functions related to get, post, put, delete
+routes - determines only the routes and what functions to execute at what route
+config - all the env and database related stuff to not upload in github (marked in .gitignore)
