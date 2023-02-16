@@ -5,13 +5,14 @@ const sendToken = require("../utils/jwtToken");
 
 // Register a user
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
 
   const user = await User.create({
     name,
     email,
     password,
     avatar: { public_id: "This is public id", url: "This is url" },
+    role,
   }); // since we fetched the details above indiviually, we are sending the data this way.
 
   sendToken(user, 201, res);
@@ -42,3 +43,31 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
   sendToken(user, 200, res);
 });
+
+// logout user
+exports.logoutUser = catchAsyncErrors(async(req, res, next) => {
+
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true
+  })
+  
+  res.status(200).json({
+    success: true,
+    message: "Logged Out"
+  })
+})
+
+// view user
+exports.viewUser = catchAsyncErrors( async(req, res, next) => {
+  const user = await User.findById(req.params.id)
+
+  if(!user) {
+    return next(new ErrorHandler("User doesn't exist", 404))
+  }
+
+  res.status(200).json({
+    success: true,
+    user
+  })
+})
