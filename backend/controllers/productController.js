@@ -3,6 +3,10 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const ApiFeatures = require("../utils/apiFeatures");
 
+// catchAsyncErrors and ErrorHandler are both error handling features but work for different purposes. catchAsyncErrors is to catch async await errors. ErrorHandler is to catch server errors
+
+// whenever we want to use middlewares, we always use next command
+
 // Create product -- Retailer
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.create(req.body);
@@ -21,9 +25,9 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   }
 
   product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-    useFindAndModify: false,
+    new: true, // if set to true, if returns the modified document, otherwise it sends the original document
+    runValidators: true, // if set to true, it runs the inputs again with the schema rules
+    useFindAndModify: false, // if set to true, it would use the deprecated findAndModify(). if false (recommended method), it would use findOneAndUpdate()
   });
 
   res.status(200).json({

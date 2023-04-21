@@ -1,5 +1,8 @@
 class ApiFeatures {
   constructor(query, queryStr) {
+    // https://www.google.com?keyword=samosa
+    // query is keyword
+    // queryStr is samosa
     this.query = query;
     this.queryStr = queryStr;
   }
@@ -7,7 +10,7 @@ class ApiFeatures {
   search() {
     const keyword = this.queryStr.keyword ? {
       name: {
-        $regex: this.queryStr.keyword,
+        $regex: this.queryStr.keyword,  // if we write samosa or samomosa, it should show samosa. for that we use regex (regular expression)
         $options: "i"     // i means case-insensitive
       }
     } : {}
@@ -34,9 +37,10 @@ class ApiFeatures {
     let queryString = JSON.stringify(queryCopy);
     queryString = queryString.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
     // /\b()\b/g is a regular expression, and we need to put what we need to change inside the bracket.
+
+    // gt-> greater than, gte-> greater than or equal to
     
     this.query = this.query.find(JSON.parse(queryString));
-
     return this;
   }
 

@@ -7,7 +7,7 @@ dotenv.config({ path: "backend/config/config.env" });
 const PORT = process.env.PORT;
 const connectDatabase = require("./config/database");
 
-// if we type console.log(youtube), it will give error "youtube is not defined". these types of errors are called uncaught exceptions. and we will handle those errors below.
+// if we type console.log(youtube), it will give error "youtube is not defined". these types of errors are called uncaught exceptions. and we will handle those errors now.
 process.on("uncaughtException", (err) => {
   console.log(`Error: ${err.message}`);
   console.log("Error due to uncaught exception");
