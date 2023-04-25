@@ -64,19 +64,21 @@ UserSchema.methods.getJWTToken = function () {
 
 UserSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcryptjs.compare(enteredPassword, this.password);
-}
+};
 
 UserSchema.methods.getResetPasswordToken = function () {
   // generating token for reset password
-
-  const resetToken = crypto.randomBytes(20).toString("hex")
+  const resetToken = crypto.randomBytes(20).toString("hex");
 
   // hashing and adding to user schema
-  this.resetPasswordToken = crypto.createHash("sha256").update(token).digest("hex");
-  this.resetPasswordExpire = Date.now() + 15*60*1000;
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
 
   return resetToken;
   // const tokenCrypto = crypto.createHash("sha256").update(token).digest("hex")
-}
+};
 
 module.exports = mongoose.model("User", UserSchema);

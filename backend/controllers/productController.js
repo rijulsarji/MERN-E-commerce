@@ -9,6 +9,8 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 // Create product -- Retailer
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
+  req.body.createdBy = req.user.id; //TODO: what does req.user.id mean here? is it an inbuilt function?
+
   const product = await Product.create(req.body);
   res.status(201).json({
     success: true,
@@ -66,16 +68,18 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
-
   const resultPerPage = 5;
-  const productCount = await Product.countDocuments()
+  const productCount = await Product.countDocuments();
 
-  const apiFeature = new ApiFeatures(Product.find(), req.query).search().filter().pagination(resultPerPage);
+  const apiFeature = new ApiFeatures(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(resultPerPage);
   const products = await apiFeature.query;
 
   res.status(200).json({
     success: true,
     products,
-    productCount
+    productCount,
   });
 });

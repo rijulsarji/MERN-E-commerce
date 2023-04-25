@@ -15,7 +15,7 @@ exports.isAuthenticated = catchAsyncErrors(async (req, res, next) => {
 
   req.user = await User.findById(decodedData.id);
 
-  next();
+  next(); // TODO: ask chatgpt what does next() do here
 });
 
 exports.authorizeRoles = (...roles) => {
@@ -29,6 +29,6 @@ exports.authorizeRoles = (...roles) => {
       );
     }
 
-    next();
+    next(); // TODO: ask chatgpt what does next() do here
   };
 };
