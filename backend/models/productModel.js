@@ -3,20 +3,21 @@ const ProductSchema = mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please enter product name"],
-    trim: true
+    trim: true,
   },
   description: {
     type: String,
-    required: [true, "Please enter product description"]
+    required: [true, "Please enter product description"],
   },
   price: {
     type: Number,
     required: [true, "Please enter product number"],
-    maxLength: [8, "Price cannot exceed 8 figures"]
+    maxLength: [8, "Price cannot exceed 8 figures"],
   },
+  // average of all the reviews
   ratings: {
     type: Number,
-    default: 0
+    default: 0,
   },
 
   // since there are gonna be multiple images, we'll take images as array
@@ -24,12 +25,13 @@ const ProductSchema = mongoose.Schema({
     {
       public_id: {
         type: String,
-        required: true
+        required: true,
       },
       url: {
         type: String,
-        required: true
-    }}
+        required: true,
+      },
+    },
   ],
   category: {
     type: String,
@@ -39,17 +41,22 @@ const ProductSchema = mongoose.Schema({
     type: Number,
     required: [true, "Please enter product stock"],
     maxLength: [4, "Stock cannot exceed 9999"],
-    default: 1
+    default: 1,
   },
   numOfReviews: {
     type: Number,
-    default: 0
+    default: 0,
   },
   reviews: [
     {
+      createdBy: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
+      },
       name: {
         type: String,
-        required: true
+        required: true,
       },
       rating: {
         type: Number,
@@ -57,9 +64,9 @@ const ProductSchema = mongoose.Schema({
       },
       comment: {
         type: String,
-        required: true
+        required: true,
       },
-    }
+    },
   ],
   createdBy: {
     type: mongoose.Schema.ObjectId,
@@ -68,8 +75,8 @@ const ProductSchema = mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-})
+});
 
 module.exports = mongoose.model("Product", ProductSchema);
