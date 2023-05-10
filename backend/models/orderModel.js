@@ -23,7 +23,7 @@ const OrderSchema = new mongoose.Schema({
       required: true,
     },
     phoneNo: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
@@ -38,7 +38,7 @@ const OrderSchema = new mongoose.Schema({
         required: true,
       },
       quantity: {
-        type: String,
+        type: Number,
         required: true,
       },
       image: {
@@ -57,6 +57,10 @@ const OrderSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  createdBy: {
+    type: String,
+    required: true,
+  },
   paymentInfo: {
     id: {
       type: String,
@@ -69,7 +73,6 @@ const OrderSchema = new mongoose.Schema({
   },
   paidAt: {
     type: Date,
-    required: true,
   },
   itemsPrice: {
     type: Number,
